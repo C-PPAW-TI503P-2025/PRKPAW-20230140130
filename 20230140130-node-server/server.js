@@ -8,6 +8,8 @@ const morgan = require("morgan");
 const presensiRoutes = require("./routes/presensi.js");
 const reportRoutes = require("./routes/reports.js");
 
+const authRoutes = require('./routes/auth.js');
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -25,6 +27,7 @@ const ruteBuku = require("./routes/books");
 app.use("/api/books", ruteBuku);
 app.use("/api/presensi", presensiRoutes);
 app.use("/api/reports", reportRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Endpoint tidak ditemukan" });

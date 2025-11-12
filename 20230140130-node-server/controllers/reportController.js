@@ -1,14 +1,15 @@
-const { Presensi } = require("../models");
+const { Presensi, User } = require("../models");
 const { Op } = require("sequelize"); 
 
 exports.getDailyReport = async (req, res) => {
   try {
     const { nama, tanggalMulai, tanggalSelesai } = req.query;
-    let where = {};
+    let wherePresensi = {};
+    let whereUser = {};
 
     const qnama = nama || req.query.name;
     if (qnama) {
-      where.nama = { [Op.like]: `%${qnama}%` };
+      whereUser.nama = { [Op.like]: `%${qnama}%` };
     }
 
     if (tanggalMulai) {
@@ -32,10 +33,18 @@ exports.getDailyReport = async (req, res) => {
         dateEnd = new Date(endString);
       }
       
-      where.checkIn = { [Op.between]: [dateStart, dateEnd] };
+      wherePresensi.checkIn = { [Op.between]: [dateStart, dateEnd] };
     }
 
-    const records = await Presensi.findAll({ where });
+    const records = await Presensi.findAll({ 
+      where: wherePresensi,
+      include: [{
+        model: User,
+        as: 'user',
+        where: whereUser,
+        attributes: ['nama', 'email']
+      }]
+    });
 
     res.json({
       reportDate: new Date().toLocaleDateString(),
