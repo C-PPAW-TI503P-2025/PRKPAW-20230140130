@@ -19,10 +19,10 @@
 ![POST](TUGAS/Screenshots/Login(Mahasiswa)_dan_Dapatkan_Token.png)
 
 ### 4. POST (Check-in (Menggunakan Token))
-![POST](TUGAS/Screenshots/Check-in_(Menggunakan Token).png)
+![POST](TUGAS/Screenshots/Checkin_Menggunakan_Token.png)
 
 ### 5. PUT (Check-in (Menggunakan Token))
-![PUT](TUGAS/Screenshots/Check-out_(Menggunakan Token).png)
+![PUT](TUGAS/Screenshots/Checkout_Menggunakan_Token.png)
 
 ### 6. MySQL (Check Database)
 ![MySQL](TUGAS/Screenshots/Check_Database.png)
