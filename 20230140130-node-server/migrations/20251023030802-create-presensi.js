@@ -11,19 +11,21 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      nama: {
-        type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: "Users", 
+          key: "id" 
+        },
+        onUpdate: "CASCADE", 
+        onDelete: "CASCADE"  
       },
       checkIn: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       checkOut: {
-        allowNull: true, // checkOut bisa kosong saat pertama kali check-in
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

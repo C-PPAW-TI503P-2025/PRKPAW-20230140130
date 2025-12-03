@@ -42,7 +42,7 @@ function ReportPage() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const query = searchTerm ? `?nama=${searchTerm}` : "";
+    const query = searchTerm ? `?email=${searchTerm}` : "";
     fetchReports(query);
   };
 
@@ -54,7 +54,7 @@ function ReportPage() {
       <form onSubmit={handleSearchSubmit} className="mb-6 flex space-x-2">
         <input
           type="text"
-          placeholder="Cari berdasarkan nama..."
+          placeholder="Cari berdasarkan email..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -73,11 +73,10 @@ function ReportPage() {
       {!error && (
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
- 
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nama
+                  Email
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Check-In
@@ -92,7 +91,7 @@ function ReportPage() {
                 reports.map((presensi) => (
                   <tr key={presensi.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {presensi.user ? presensi.user.nama : "N/A"}
+                      {presensi.user ? presensi.user.email : "N/A"}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(presensi.checkIn).toLocaleString("id-ID", {
@@ -125,4 +124,5 @@ function ReportPage() {
     </div>
   );
 }
+
 export default ReportPage;

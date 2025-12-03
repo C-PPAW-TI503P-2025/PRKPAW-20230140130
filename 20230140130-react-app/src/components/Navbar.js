@@ -27,7 +27,7 @@ function Navbar() {
     const renderAuthButtons = user ? (
         <div className="flex items-center space-x-4">
             <span className="text-gray-700 text-sm hidden sm:inline">
-                Halo, <b className="text-blue-600">{user.nama}</b> ({user.role})
+                Halo, <b className="text-blue-600">{user.email}</b> ({user.role}) {/* GANTI user.nama jadi user.email */}
             </span>
             <button 
                 onClick={handleLogout}

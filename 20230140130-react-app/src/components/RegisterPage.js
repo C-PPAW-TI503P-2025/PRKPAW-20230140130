@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom'; // <-- Tambahkan Link
+import { useNavigate, Link } from 'react-router-dom';
 
 function RegisterPage() {
-  // Buat state untuk semua field yang diperlukan
-  const [nama, setNama] = useState('');
+  // HAPUS state nama
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('mahasiswa'); // Default role 
+  const [role, setRole] = useState('mahasiswa');
   
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null); // State untuk pesan sukses
+  const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,30 +18,25 @@ function RegisterPage() {
     setSuccess(null);
 
     try {
-      // Kirim data ke endpoint register 
+      // HAPUS nama dari request body
       const response = await axios.post('http://localhost:3001/api/auth/register', {
-        nama: nama,
         email: email,
         password: password,
         role: role
       });
 
-      // Tampilkan pesan sukses
       setSuccess('Registrasi berhasil! Anda akan diarahkan ke halaman login.');
 
-      // Arahkan ke halaman login setelah 2 detik 
       setTimeout(() => {
         navigate('/login');
       }, 2000);
 
     } catch (err) {
-      // Tangani error (misal: email sudah terdaftar)
       setError(err.response ? err.response.data.message : 'Registrasi gagal');
     }
   };
 
   return (
-    // Gunakan styling Tailwind yang mirip dengan LoginPage
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
@@ -50,23 +44,7 @@ function RegisterPage() {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           
-          {/* Field untuk Nama */}
-          <div>
-            <label 
-              htmlFor="nama" 
-              className="block text-sm font-medium text-gray-700"
-            >
-              Nama Lengkap:
-            </label>
-            <input
-              id="nama"
-              type="text"
-              value={nama}
-              onChange={(e) => setNama(e.target.value)}
-              required
-              className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          {/* HAPUS Field Nama */}
 
           {/* Field untuk Email */}
           <div>
@@ -131,7 +109,6 @@ function RegisterPage() {
           </button>
         </form>
 
-        {/* Tampilkan pesan Error atau Sukses */}
         {error && (
           <p className="text-red-600 text-sm mt-4 text-center">{error}</p>
         )}

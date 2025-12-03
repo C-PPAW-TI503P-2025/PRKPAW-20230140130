@@ -3,13 +3,13 @@ const { Op } = require("sequelize");
 
 exports.getDailyReport = async (req, res) => {
   try {
-    const { nama, tanggalMulai, tanggalSelesai } = req.query;
+    const { email, tanggalMulai, tanggalSelesai } = req.query; // GANTI nama jadi email
     let wherePresensi = {};
     let whereUser = {};
 
-    const qnama = nama || req.query.name;
-    if (qnama) {
-      whereUser.nama = { [Op.like]: `%${qnama}%` };
+    // GANTI pencarian berdasarkan email
+    if (email) {
+      whereUser.email = { [Op.like]: `%${email}%` };
     }
 
     if (tanggalMulai) {
@@ -42,7 +42,7 @@ exports.getDailyReport = async (req, res) => {
         model: User,
         as: 'user',
         where: whereUser,
-        attributes: ['nama', 'email']
+        attributes: ['email'] // HAPUS 'nama'
       }]
     });
 
