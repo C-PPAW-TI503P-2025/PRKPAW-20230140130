@@ -9,16 +9,16 @@
 ## Screenshots Hasil Praktikum
 
 ### 1. PresensiPage menampilkan kamera
-![POST](TUGAS/Screenshots/PresensiPage_menampilkan_kamera.png)
+![WEB](TUGAS/Screenshots/PresensiPage_menampilkan_kamera.png)
 
 ### 2. Tampilan kolom baru "Bukti Foto"
-![POST](TUGAS/Screenshots/Tampilan_kolom_baru_Bukti_Foto.png)
+![WEB](TUGAS/Screenshots/Tampilan_kolom_baru_Bukti_Foto.png)
 
 ### 3. Tampilan Foto Ukuran penuh saat diklik
-![CHECKIN](TUGAS/Screenshots/Tampilan_Foto_Ukuran_penuh_saat_diklik.png)
+![WEB](TUGAS/Screenshots/Tampilan_Foto_Ukuran_penuh_saat_diklik.png)
 
 ### 4. EndPoint Presensi Check-in dan Check-out
-![CHECKOUT](TUGAS/Screenshots/EndPoint_Presensi_Checkin_dan_Checkout.png)
+![POSTMAN](TUGAS/Screenshots/EndPoint_Presensi_Checkin_dan_Checkout.png)
 
-### 5. Screenshote tabel presensi di database
-![REPORT](TUGAS/Screenshots/Screenshote_tabel_presensi_di_database.png)
+### 5. Screenshot tabel presensi di database
+![MySQL](TUGAS/Screenshots/Screenshote_tabel_presensi_di_database.png)
