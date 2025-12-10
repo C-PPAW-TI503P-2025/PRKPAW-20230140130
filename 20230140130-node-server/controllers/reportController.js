@@ -3,54 +3,78 @@ const { Op } = require("sequelize");
 
 exports.getDailyReport = async (req, res) => {
   try {
-    const { email, tanggalMulai, tanggalSelesai } = req.query; // GANTI nama jadi email
+    const { email, startDate, endDate } = req.query;
+
+    // Build query conditions
     let wherePresensi = {};
     let whereUser = {};
 
-    // GANTI pencarian berdasarkan email
+    // Filter by email if provided
     if (email) {
       whereUser.email = { [Op.like]: `%${email}%` };
     }
 
-    if (tanggalMulai) {
-      const startString = `${tanggalMulai} 00:00:00`;
-      const dateStart = new Date(startString); 
+    // Filter by date range if provided
+    if (startDate && endDate) {
+      const start = new Date(`${startDate}T00:00:00.000Z`);
+      const end = new Date(`${endDate}T23:59:59.999Z`);
       
-      if (isNaN(dateStart.getTime())) {
-        return res.status(400).json({ message: "Format tanggalMulai tidak valid. Gunakan YYYY-MM-DD." });
-      }
-
-      let dateEnd;
-      if (tanggalSelesai) {
-        const endString = `${tanggalSelesai} 23:59:59.999`;
-        dateEnd = new Date(endString);
-        
-        if (isNaN(dateEnd.getTime())) {
-          return res.status(400).json({ message: "Format tanggalSelesai tidak valid. Gunakan YYYY-MM-DD." });
-        }
-      } else {
-        const endString = `${tanggalMulai} 23:59:59.999`;
-        dateEnd = new Date(endString);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        return res.status(400).json({ 
+          message: "Format tanggal tidak valid. Gunakan YYYY-MM-DD." 
+        });
       }
       
-      wherePresensi.checkIn = { [Op.between]: [dateStart, dateEnd] };
+      wherePresensi.checkIn = { [Op.between]: [start, end] };
+    } else if (startDate) {
+      const start = new Date(`${startDate}T00:00:00.000Z`);
+      const end = new Date(`${startDate}T23:59:59.999Z`);
+      
+      if (isNaN(start.getTime())) {
+        return res.status(400).json({ 
+          message: "Format tanggal mulai tidak valid. Gunakan YYYY-MM-DD." 
+        });
+      }
+      
+      wherePresensi.checkIn = { [Op.between]: [start, end] };
+    } else if (endDate) {
+      const end = new Date(`${endDate}T23:59:59.999Z`);
+      
+      if (isNaN(end.getTime())) {
+        return res.status(400).json({ 
+          message: "Format tanggal selesai tidak valid. Gunakan YYYY-MM-DD." 
+        });
+      }
+      
+      wherePresensi.checkIn = { [Op.lte]: end };
     }
 
+    // Fetch data with filters
     const records = await Presensi.findAll({ 
       where: wherePresensi,
       include: [{
         model: User,
         as: 'user',
-        where: whereUser,
-        attributes: ['email'] // HAPUS 'nama'
-      }]
+        where: Object.keys(whereUser).length > 0 ? whereUser : undefined,
+        attributes: ['id', 'email', 'role'],
+        required: Object.keys(whereUser).length > 0 // INNER JOIN jika ada filter email
+      }],
+      order: [['checkIn', 'DESC']]
     });
 
     res.json({
-      reportDate: new Date().toLocaleDateString(),
+      message: records.length > 0 
+        ? `Ditemukan ${records.length} data presensi` 
+        : "Tidak ada data presensi ditemukan",
+      reportDate: new Date().toLocaleDateString('id-ID'),
       data: records,
     });
+
   } catch (error) {
-    res.status(500).json({ message: "Gagal mengambil laporan", error: error.message });
+    console.error("Error in getDailyReport:", error);
+    res.status(500).json({ 
+      message: "Gagal mengambil laporan", 
+      error: error.message 
+    });
   }
 };

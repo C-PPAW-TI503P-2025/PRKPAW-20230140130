@@ -26,12 +26,9 @@ const validatePresensiUpdate = [
     }
 ];
 
-router.post('/check-in', authenticateToken, presensiController.CheckIn);
 router.put('/check-out', authenticateToken, presensiController.CheckOut);
 router.put("/:id", authenticateToken, validatePresensiUpdate, presensiController.updatePresensi); 
 router.delete("/:id", authenticateToken, presensiController.deletePresensi);
-// HAPUS route search/nama
-// router.get('/search/nama', presensiController.searchByNama);
 router.get('/search/tanggal', presensiController.searchByTanggal);
-
+router.post('/check-in', [authenticateToken, presensiController.upload.single('image')], presensiController.CheckIn);
 module.exports = router;
