@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3001;
 const morgan = require("morgan");
 const path = require('path'); 
-
+const iotRoutes = require("./routes/iot");
 // Impor router
 const presensiRoutes = require("./routes/presensi.js");
 const reportRoutes = require("./routes/reports.js");
@@ -31,6 +31,7 @@ app.use("/api/books", ruteBuku);
 app.use("/api/presensi", presensiRoutes);
 app.use("/api/reports", reportRoutes);
 app.use('/api/auth', authRoutes);
+app.use("/api/iot", iotRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Endpoint tidak ditemukan" });
@@ -39,3 +40,6 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Express server running at http://localhost:${PORT}/`);
 });
+
+
+
